@@ -44,3 +44,12 @@
 /home/laura/Documents/Decora/api/obj/Debug/net8.0/api.pdb
 /home/laura/Documents/Decora/api/obj/Debug/net8.0/api.genruntimeconfig.cache
 /home/laura/Documents/Decora/api/obj/Debug/net8.0/ref/api.dll
+/home/laura/Documents/Decora/api/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/laura/Documents/Decora/api/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/home/laura/Documents/Decora/api/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/laura/Documents/Decora/api/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/home/laura/Documents/Decora/api/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/home/laura/Documents/Decora/api/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/laura/Documents/Decora/api/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/home/laura/Documents/Decora/api/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/home/laura/Documents/Decora/api/obj/Debug/net8.0/api.sourcelink.json

@@ -1,15 +1,22 @@
+using api.DTOs;
+
 namespace api.Repositories;
 
 public class AccountRepository : IAccountRepository
 {
+    #region Mongodb
     private readonly IMongoCollection<AppUser> _collection;
+    private readonly ITokenService _tokenService;
 
     // Dependency Injection
-    public AccountRepository(IMongoClient client, IMongoDbSettings dbSettings)
+    public AccountRepository(IMongoClient client, IMongoDbSettings dbSettings, ITokenService tokenService)
     {
         var dbName = client.GetDatabase(dbSettings.DatabaseName);
         _collection = dbName.GetCollection<AppUser>("users");
+
+        _tokenService = tokenService;
     }
+    #endregion
 
     public async Task<LoggedInDto?> RegisterAsync(AppUser userIn, CancellationToken cancellationToken)
     {
@@ -21,28 +28,22 @@ public class AccountRepository : IAccountRepository
 
         await _collection.InsertOneAsync(userIn, null, cancellationToken);
 
-        LoggedInDto loggedInDto = new(
-            Email: userIn.Email,
-            Name: userIn.Name
-        );
+        string? token =  _tokenService.CreateToken(userIn);
 
-        return loggedInDto;
+        return Meppers.ConvertAppUserToLoggedInDto(userIn, token);
     }
 
     public async Task<LoggedInDto?> LoginAsync(LoginDto userIn, CancellationToken cancellationToken)
     {
-        AppUser User = await _collection.Find(doc => doc.Email == userIn.Email && doc.Password == userIn.Password)
+        AppUser user = await _collection.Find(doc => doc.Email == userIn.Email && doc.Password == userIn.Password)
         .FirstOrDefaultAsync(cancellationToken);
 
-        if (User is null)
+        if (user is null)
             return null;
 
-        LoggedInDto loggedInDto = new(
-            Email: User.Email,
-            Name: User.Name
-        );
+        string? token =  _tokenService.CreateToken(user);
 
-        return loggedInDto;
+        return Meppers.ConvertAppUserToLoggedInDto(user, token);
     }
 
     public async Task<DeleteResult?> DeleteByIdAsync(string userId, CancellationToken cancellationToken)

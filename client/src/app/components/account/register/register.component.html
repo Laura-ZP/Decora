@@ -1,0 +1,53 @@
+<section>
+    <div class="item-1">
+        <form>
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input type="email" [formControl]="EmailCtrl" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input type="text" [formControl]="NameCtrl" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Surname</mat-label>
+                <input type="text" [formControl]="SurnameCtrl" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input type="password" [formControl]="PasswordCtrl" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>ConfirmPassword</mat-label>
+                <input type="password" [formControl]="ConfirmPasswordCtrl" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>NationalCode</mat-label>
+                <input type="text" [formControl]="NationalCodeCtrl" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Age</mat-label>
+                <input type="number" [formControl]="AgeCtrl" matInput>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <input type="text" [formControl]="CityCtrl" matInput>
+            </mat-form-field>
+
+            <button (click)="register()" 
+            mat-flat-button 
+            color="primary" 
+            [disabled]="registerFg.invalid"
+            >
+            Register
+            </button>
+        </form>
+    </div>
+</section>
