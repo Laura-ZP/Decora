@@ -1,6 +1,6 @@
 import {
   InjectionToken
-} from "./chunk-BF3C3RBX.js";
+} from "./chunk-MTES5EJZ.js";
 
 // node_modules/@angular/common/fesm2022/dom_tokens-rA0ACyx7.mjs
 var DOCUMENT = new InjectionToken(ngDevMode ? "DocumentToken" : "");
@@ -32,6 +32,7 @@ export {
   DOCUMENT,
   parseCookieValue,
   PLATFORM_BROWSER_ID,
+  PLATFORM_SERVER_ID,
   isPlatformBrowser,
   isPlatformServer,
   XhrFactory
@@ -46,4 +47,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-TMGKHWHW.js.map
+//# sourceMappingURL=chunk-3B7WPXDT.js.map
