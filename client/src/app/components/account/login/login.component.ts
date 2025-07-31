@@ -1,11 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AccountService } from '../../../services/account.service';
+import { FormBuilder, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Login } from '../../../models/login.model';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [
+    MatInputModule, MatButtonModule, MatFormFieldModule, MatCardModule,
+    ReactiveFormsModule, FormsModule,
+    RouterLink
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  accountService = inject(AccountService);
+  fB = inject(FormBuilder);
 
+  loginFg = this.fB.group({
+    emailCtrl: ['', [Validators.required, Validators.email]],
+    passwordCtrl: ['', [Validators.required]]
+  });
+
+  get EmailCtrl(): FormControl {
+    return this.loginFg.get('emailCtrl') as FormControl;
+  }
+
+  get PasswordCtrl(): FormControl {
+    return this.loginFg.get('passwordCtrl') as FormControl;
+  }
+
+  login(): void {
+    let userInput: Login = {
+      email: this.EmailCtrl.value,
+      password: this.PasswordCtrl.value
+    }
+
+    this.accountService.login(userInput).subscribe();
+  }
 }

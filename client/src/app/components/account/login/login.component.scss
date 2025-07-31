@@ -1,0 +1,21 @@
+section {
+    display: flex;
+    justify-content: center;
+
+    .item-1 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem;
+
+        form {
+            padding: 2rem;
+            gap: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 3px solid rgb(21, 4, 97);
+            border-radius: 12px;
+        }
+    }
+}
