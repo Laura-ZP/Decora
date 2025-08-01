@@ -5,7 +5,12 @@
     </section>
 
     <section class="right">
+         @if (accountService.loggedInUserSig()) {
+        <button (click)="logout()" mat-raised-button color="warn">Logout</button>
+        }
+        @else {
         <button routerLink="/account/register" mat-raised-button>register</button>
         <button routerLink="/account/login" mat-raised-button>Login</button>
+        }
     </section>
 </mat-toolbar>

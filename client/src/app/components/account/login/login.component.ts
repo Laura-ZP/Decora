@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
+import { LoggedIn } from '../../../models/logged-in.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +23,7 @@ import { RouterLink } from '@angular/router';
 export class LoginComponent {
   accountService = inject(AccountService);
   fB = inject(FormBuilder);
+  loggedInRes: LoggedIn | undefined | null;
 
   loginFg = this.fB.group({
     emailCtrl: ['', [Validators.required, Validators.email]],
@@ -41,6 +44,13 @@ export class LoginComponent {
       password: this.PasswordCtrl.value
     }
 
-    this.accountService.login(userInput).subscribe();
+  let loginResponse$: Observable<LoggedIn | null> = this.accountService.login(userInput);
+
+    loginResponse$.subscribe({
+      next: (res => {
+        console.log(res);
+        this.loggedInRes = res;
+      })
+    });
   }
 }
