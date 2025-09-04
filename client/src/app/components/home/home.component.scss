@@ -1,0 +1,123 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main */
+.main {
+  flex: 1;
+}
+
+/* Search Section */
+.search-section {
+  background: #f9fafb;
+  padding: 4rem 1rem;
+  text-align: center;
+
+  h2 {
+    font-size: 2.25rem;
+    font-weight: bold;
+    color: #111827;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.25rem;
+    color: #4b5563;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .search-box {
+    max-width: 600px;
+    margin: auto;
+    position: relative;
+
+    input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 9999px;
+      font-size: 1rem;
+
+      &:focus {
+        border-color: #2563eb;
+        outline: none;
+      }
+    }
+
+    .search-btn {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0.5rem 2rem;
+      border-radius: 9999px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
+
+/* Sections */
+.interior-section,
+.exterior-section {
+  padding: 4rem 1rem;
+  text-align: center;
+
+  h2 {
+    font-size: 1.875rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.125rem;
+    color: #4b5563;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+  }
+
+  .grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .interior-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .exterior-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-width: 700px;
+    margin: auto;
+  }
+
+  .outline-btn {
+    height: 8rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+
+    &.green:hover {
+      border-color: #22c55e;
+      background: #ecfdf5;
+    }
+  }
+}
