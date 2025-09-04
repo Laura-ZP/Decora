@@ -9,6 +9,6 @@ public record AppUser(
     string Password,
     string ConfirmPassword,
     string NationalCode,
-    int Age,
+    DateOnly DateOfBirth,
     string City
 );

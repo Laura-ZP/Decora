@@ -1,3 +1,5 @@
+using api.Extensions;
+
 namespace api.DTOs;
 
 public static class Meppers
@@ -7,6 +9,7 @@ public static class Meppers
         return new(
             Email: appUser.Email,
             Name: appUser.Name,
+            Age: DateTimeExtensions.CalculateAge(appUser.DateOfBirth),
             Token: tokenValue
         );
     }

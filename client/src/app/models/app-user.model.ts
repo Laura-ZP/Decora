@@ -5,6 +5,6 @@ export interface AppUser {
     password: string;
     confirmPassword: string;
     nationalCode: string;
-    age: number;
+    dateOfBirth: string | undefined;
     city: string;
 }

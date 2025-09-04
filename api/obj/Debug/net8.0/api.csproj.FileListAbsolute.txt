@@ -16,9 +16,6 @@
 /home/laura/Documents/Decora/api/bin/Debug/net8.0/MongoDB.Libmongocrypt.dll
 /home/laura/Documents/Decora/api/bin/Debug/net8.0/SharpCompress.dll
 /home/laura/Documents/Decora/api/bin/Debug/net8.0/Snappier.dll
-/home/laura/Documents/Decora/api/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
-/home/laura/Documents/Decora/api/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
-/home/laura/Documents/Decora/api/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
 /home/laura/Documents/Decora/api/bin/Debug/net8.0/ZstdSharp.dll
 /home/laura/Documents/Decora/api/bin/Debug/net8.0/runtimes/linux/native/libmongocrypt.so
 /home/laura/Documents/Decora/api/bin/Debug/net8.0/runtimes/osx/native/libmongocrypt.dylib
