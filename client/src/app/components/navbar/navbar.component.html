@@ -5,12 +5,54 @@
     </section>
 
     <section class="right">
-         @if (accountService.loggedInUserSig()) {
-        <button (click)="logout()" mat-raised-button color="warn">Logout</button>
+        @if (accountService.loggedInUserSig(); as user) {
+        <button [mat-menu-trigger-for]="appMenu" class="menu-button" mat-mini-fab>
+            <span>{{user.name[0] | titlecase}}</span>
+        </button>
         }
         @else {
         <button routerLink="/account/register" mat-raised-button>register</button>
         <button routerLink="/account/login" mat-raised-button>Login</button>
         }
     </section>
+    <mat-menu class="mat-menu" #appMenu>
+        @if (accountService.loggedInUserSig(); as user) {
+        <div class="user-info">
+            <div class="profile-info">
+                <img src="images/nature.jpg" alt="{{user.name[0] | titlecase}}">
+                <!-- <p>{{ user.name[0] | titlecase }}</p> -->
+            </div>
+            <div>
+                <p class="email">{{ user.email }}</p>
+            </div>
+        </div>
+        }
+
+        <mat-divider></mat-divider>
+        <mat-list>
+            <mat-list-item>
+                <div class="menu-items">
+                    <mat-icon>edit_note</mat-icon>
+                    Edit Profile
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div class="menu-items">
+                    <mat-icon>flaky</mat-icon>
+                    All Members
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div class="menu-items">
+                    <mat-icon>assignment_returned</mat-icon>
+                    Messages
+                </div>
+            </mat-list-item>
+        </mat-list>
+
+        <mat-divider></mat-divider>
+        <div class="logout">
+            <button (click)="logout()" mat-raised-button color="warn">Logout</button>
+        </div>
+    </mat-menu>
 </mat-toolbar>
