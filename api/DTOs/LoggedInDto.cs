@@ -1,8 +1,10 @@
 namespace api.DTOs;
 
-public record LoggedInDto(
-    string Email,
-    string Name,
-    int Age,
-    string Token
-);
+public class LoggedInDto
+{
+    public string? Token { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? FirstName { get; init; }
+    public string? LastName { get; init; }
+    public bool? LicenseVerified { get; init; }
+}

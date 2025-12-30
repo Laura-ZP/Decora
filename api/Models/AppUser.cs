@@ -6,19 +6,19 @@ namespace api.Models;
 [CollectionName("users")]
 public class AppUser : MongoIdentityUser<ObjectId>
 {
-    public string FirstName { get; set; } = null!;
-    public string LastName { get; set; } = null!;
+    public string FirstName { get; init; } = null!;
+    public string LastName { get; init; } = null!;
     public DateOnly DateOfBirth { get; init; }
     public string City { get; init; } = string.Empty;
-    public int YearsOfExperience { get; set; }
-    public List<string> Specializations { get; set; } = new();
+    public int YearsOfExperience { get; init; }
+    public List<string> Specializations { get; init; } = new();
     // ex: Residential, Commercial, Interior Design, Landscape
-    public List<string> Skills { get; set; } = new();
+    public List<string> Skills { get; init; } = new();
     // ex: AutoCAD, Revit, SketchUp, BIM
-    public bool IsAvailableForHire { get; set; }
-    public bool RemoteWork { get; set; }
-    public string Address { get; set; } = string.Empty;
-    public bool LicenseVerified { get; set; }
+    public bool IsAvailableForHire { get; init; }
+    public bool RemoteWork { get; init; }
+    public string Address { get; init; } = string.Empty;
+    public bool LicenseVerified { get; init; }
 }
 
 
