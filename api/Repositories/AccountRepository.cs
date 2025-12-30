@@ -9,7 +9,7 @@ public class AccountRepository : IAccountRepository
     private readonly ITokenService _tokenService;
 
     // Dependency Injection
-    public AccountRepository(IMongoClient client, IMongoDbSettings dbSettings, ITokenService tokenService)
+    public AccountRepository(IMongoClient client, IMyMyMongoDbSettings dbSettings, ITokenService tokenService)
     {
         var dbName = client.GetDatabase(dbSettings.DatabaseName);
         _collection = dbName.GetCollection<AppUser>("users");

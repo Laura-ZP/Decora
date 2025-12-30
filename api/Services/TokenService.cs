@@ -10,7 +10,7 @@ public class TokenService : ITokenService
     private readonly IMongoCollection<AppUser> _collection;
     private readonly SymmetricSecurityKey? _key;
 
-    public TokenService(IConfiguration config, IMongoClient client, IMongoDbSettings dbSettings)
+    public TokenService(IConfiguration config, IMongoClient client, IMyMyMongoDbSettings dbSettings)
     {
         var database = client.GetDatabase(dbSettings.DatabaseName);
         _collection = database.GetCollection<AppUser>("users");
