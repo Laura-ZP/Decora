@@ -19,6 +19,8 @@ public class AppUser : MongoIdentityUser<ObjectId>
     public bool RemoteWork { get; init; }
     public string Address { get; init; } = string.Empty;
     public bool LicenseVerified { get; init; }
+    public string LicenseNumber { get; init; } = string.Empty;
+    public string Providence { get; init; } = string.Empty;
 }
 
 

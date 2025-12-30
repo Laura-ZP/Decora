@@ -7,4 +7,5 @@ public class LoggedInDto
     public string? FirstName { get; init; }
     public string? LastName { get; init; }
     public bool? LicenseVerified { get; init; }
+    public bool? IsWrongCreds { get; set; }
 }
