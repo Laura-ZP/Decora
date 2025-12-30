@@ -10,7 +10,7 @@ public static class ApplicationServiceExtensions
         services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
 
         // get values
-        services.AddSingleton<IMyMyMongoDbSettings>(serviceProvider =>
+        services.AddSingleton<IMyMongoDbSettings>(serviceProvider =>
             serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
         // get connectionString to the dbTest.ShowName();

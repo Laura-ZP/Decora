@@ -9,7 +9,7 @@ public class AccountRepository : IAccountRepository
     private readonly ITokenService _tokenService;
 
     // Dependency Injection
-    public AccountRepository(IMongoClient client, IMyMyMongoDbSettings dbSettings, ITokenService tokenService)
+    public AccountRepository(IMongoClient client, IMyMongoDbSettings dbSettings, ITokenService tokenService)
     {
         var dbName = client.GetDatabase(dbSettings.DatabaseName);
         _collection = dbName.GetCollection<AppUser>("users");
@@ -28,7 +28,7 @@ public class AccountRepository : IAccountRepository
 
         await _collection.InsertOneAsync(userIn, null, cancellationToken);
 
-        string? token =  _tokenService.CreateToken(userIn);
+        string? token = _tokenService.CreateToken(userIn);
 
         return Meppers.ConvertAppUserToLoggedInDto(userIn, token);
     }
@@ -41,7 +41,7 @@ public class AccountRepository : IAccountRepository
         if (user is null)
             return null;
 
-        string? token =  _tokenService.CreateToken(user);
+        string? token = _tokenService.CreateToken(user);
 
         return Meppers.ConvertAppUserToLoggedInDto(user, token);
     }
