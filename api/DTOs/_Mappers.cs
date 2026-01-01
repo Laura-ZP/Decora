@@ -2,7 +2,7 @@ using api.Extensions;
 
 namespace api.DTOs;
 
-public static class Meppers
+public static class Mappers
 {
     public static LoggedInDto ConvertAppUserToLoggedInDto(AppUser appUser, string tokenValue)
     {

@@ -1,4 +1,5 @@
 using api.DTOs;
+using Microsoft.AspNetCore.Identity;
 
 namespace api.Repositories;
 
@@ -7,30 +8,99 @@ public class AccountRepository : IAccountRepository
     #region Mongodb
     private readonly IMongoCollection<AppUser> _collection;
     private readonly ITokenService _tokenService;
+    private readonly UserManager<AppUser> _userManager;
 
     // Dependency Injection
-    public AccountRepository(IMongoClient client, IMyMongoDbSettings dbSettings, ITokenService tokenService)
+    public AccountRepository(IMongoClient client, IMyMongoDbSettings dbSettings, ITokenService tokenService, UserManager<AppUser> userManager)
     {
         var dbName = client.GetDatabase(dbSettings.DatabaseName);
         _collection = dbName.GetCollection<AppUser>("users");
 
         _tokenService = tokenService;
+        _userManager = userManager;
     }
     #endregion
 
-    public async Task<LoggedInDto?> RegisterAsync(AppUser userIn, CancellationToken cancellationToken)
+    public async Task<LoggedInDto?> ArchitectureRegisterAsync(ArchitectureRegisterDto userInput, CancellationToken cancellationToken)
     {
-        AppUser user = await _collection.Find(doc =>
-            doc.Email == userIn.Email).FirstOrDefaultAsync(cancellationToken);
+        var appUser = Mappers.ConvertArchitectureRegisterDtoToAppUser(userInput);
 
-        if (user is not null)
-            return null;
+        var userCreationResult = await _userManager.CreateAsync(appUser, userInput.Password);
 
-        await _collection.InsertOneAsync(userIn, null, cancellationToken);
+        if (!userCreationResult.Succeeded)
+        {
+            var errors = userCreationResult.Errors.Select(e => e.Description).ToList();
 
-        string? token = _tokenService.CreateToken(userIn);
+            return new LoggedInDto
+            {
+                Errors = errors
+            };
+        }
 
-        return Meppers.ConvertAppUserToLoggedInDto(userIn, token);
+        var roleResult = await _userManager.AddToRoleAsync(appUser, "architecture");
+
+        if (!roleResult.Succeeded)
+        {
+            var roleErrors = roleResult.Errors.Select(e => e.Description).ToList();
+
+            return new LoggedInDto
+            {
+                Errors = roleErrors
+            };
+        }
+
+        var token = await _tokenService.CreateToken(appUser);
+
+        if (string.IsNullOrEmpty(token))
+        {
+            return new LoggedInDto
+            {
+                Errors = new List<string> { "Failed to generate authentication token." }
+            };
+        }
+
+        return Mappers.ConvertAppUserToLoggedInDto(appUser, token);
+    }
+
+    public async Task<LoggedInDto?> ClientRegisterAsync(ClientRegisterDto userInput, CancellationToken cancellationToken)
+    {
+        var appUser = Mappers.ConvertClientRegisterDtoToAppUser(userInput);
+
+        var userCreationResult = await _userManager.CreateAsync(appUser, userInput.Password);
+
+        if (!userCreationResult.Succeeded)
+        {
+            var errors = userCreationResult.Errors.Select(e => e.Description).ToList();
+
+            return new LoggedInDto
+            {
+                Errors = errors
+            };
+        }
+
+        var roleResult = await _userManager.AddToRoleAsync(appUser, "client");
+
+        if (!roleResult.Succeeded)
+        {
+            var roleErrors = roleResult.Errors.Select(e => e.Description).ToList();
+
+            return new LoggedInDto
+            {
+                Errors = roleErrors
+            };
+        }
+
+        var token = await _tokenService.CreateToken(appUser);
+
+        if (string.IsNullOrEmpty(token))
+        {
+            return new LoggedInDto
+            {
+                Errors = new List<string> { "Failed to generate authentication token." }
+            };
+        }
+
+        return Mappers.ConvertAppUserToLoggedInDto(appUser, token);
     }
 
     public async Task<LoggedInDto?> LoginAsync(LoginDto userIn, CancellationToken cancellationToken)
@@ -43,7 +113,7 @@ public class AccountRepository : IAccountRepository
 
         string? token = _tokenService.CreateToken(user);
 
-        return Meppers.ConvertAppUserToLoggedInDto(user, token);
+        return Mappers.ConvertAppUserToLoggedInDto(user, token);
     }
 
     public async Task<DeleteResult?> DeleteByIdAsync(string userId, CancellationToken cancellationToken)

@@ -4,16 +4,40 @@ namespace api.Controllers;
 [Route("api/[controller]")]
 public class AccountController(IAccountRepository accountRepository) : ControllerBase
 {
-    [HttpPost("register")]
-    public async Task<ActionResult<LoggedInDto>> Register(AppUser UserIn, CancellationToken cancellationToken)
+    [HttpPost("architecture-register")]
+    public async Task<ActionResult<LoggedInDto>> ArchitectureRegister(ArchitectureRegisterDto userInput, CancellationToken cancellationToken)
     {
-        if (UserIn.Password != UserIn.ConfirmPassword)
+        if (userInput.Password != userInput.ConfirmPassword)
             return BadRequest("Your passwords do not match!");
 
-        LoggedInDto? loggedInDto = await accountRepository.RegisterAsync(UserIn, cancellationToken);
+        LoggedInDto? loggedInDto = await accountRepository.ArchitectureRegisterAsync(userInput, cancellationToken);
 
-        if (loggedInDto is null)
-            return BadRequest("This email is already taken.");
+        if (loggedInDto?.Errors.Count() > 0)
+        {
+            foreach (var error in loggedInDto.Errors)
+            {
+                return BadRequest(error);
+            }
+        }
+
+        return Ok(loggedInDto);
+    }
+
+    [HttpPost("client-register")]
+    public async Task<ActionResult<LoggedInDto>> ClientRegister(ClientRegisterDto userInput, CancellationToken cancellationToken)
+    {
+        if (userInput.Password != userInput.ConfirmPassword)
+            return BadRequest("Your passwords do not match!");
+
+        LoggedInDto? loggedInDto = await accountRepository.ClientRegisterAsync(userInput, cancellationToken);
+
+        if (loggedInDto?.Errors.Count() > 0)
+        {
+            foreach (var error in loggedInDto.Errors)
+            {
+                return BadRequest(error);
+            }
+        }
 
         return Ok(loggedInDto);
     }
