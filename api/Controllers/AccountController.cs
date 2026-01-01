@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+
 namespace api.Controllers;
 
 [ApiController]
@@ -53,6 +55,7 @@ public class AccountController(IAccountRepository accountRepository) : Controlle
         return loggedInDto;
     }
 
+    [Authorize]
     [HttpDelete("delete/{userId}")]
     public async Task<ActionResult<DeleteResult>> DeleteByID(string userId, CancellationToken cancellationToken)
     {

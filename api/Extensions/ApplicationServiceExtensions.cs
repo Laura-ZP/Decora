@@ -7,17 +7,17 @@ public static class ApplicationServiceExtensions
         #region MongoDbSettings
         ///// get values from this file: appsettings.Development.json /////
         // get section
-        services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
+        services.Configure<MyMongoDbSettings>(configuration.GetSection(nameof(MyMongoDbSettings)));
 
         // get values
         services.AddSingleton<IMyMongoDbSettings>(serviceProvider =>
-            serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
+            serviceProvider.GetRequiredService<IOptions<MyMongoDbSettings>>().Value);
 
         // get connectionString to the dbTest.ShowName();
 
         services.AddSingleton<IMongoClient>(serviceProvider =>
         {
-            MongoDbSettings uri = serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value;
+            MyMongoDbSettings uri = serviceProvider.GetRequiredService<IOptions<MyMongoDbSettings>>().Value;
 
             return new MongoClient(uri.ConnectionString);
         });
