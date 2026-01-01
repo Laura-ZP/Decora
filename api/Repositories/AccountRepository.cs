@@ -103,17 +103,36 @@ public class AccountRepository : IAccountRepository
         return Mappers.ConvertAppUserToLoggedInDto(appUser, token);
     }
 
-    public async Task<LoggedInDto?> LoginAsync(LoginDto userIn, CancellationToken cancellationToken)
+    public async Task<LoggedInDto?> LoginAsync(LoginDto userInput, CancellationToken cancellationToken)
     {
-        AppUser user = await _collection.Find(doc => doc.Email == userIn.Email && doc.Password == userIn.Password)
-        .FirstOrDefaultAsync(cancellationToken);
+        AppUser? appUser = await _userManager.FindByEmailAsync(userInput.Email);
 
-        if (user is null)
+        if (appUser is null)
+        {
+            return new LoggedInDto
+            {
+                IsWrongCreds = true,
+            };
+        }
+
+        bool isPassCorrect = await _userManager.CheckPasswordAsync(appUser, userInput.Password);
+
+        if (!isPassCorrect)
+        {
+            return new LoggedInDto
+            {
+                IsWrongCreds = true
+            };
+        }
+
+        string? token = await _tokenService.CreateToken(appUser);
+
+        if (string.IsNullOrEmpty(token))
+        {
             return null;
+        }
 
-        string? token = _tokenService.CreateToken(user);
-
-        return Mappers.ConvertAppUserToLoggedInDto(user, token);
+        return Mappers.ConvertAppUserToLoggedInDto(appUser, token);
     }
 
     public async Task<DeleteResult?> DeleteByIdAsync(string userId, CancellationToken cancellationToken)

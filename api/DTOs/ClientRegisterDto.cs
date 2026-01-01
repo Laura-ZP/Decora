@@ -6,6 +6,8 @@ public record ClientRegisterDto(
     DateOnly DateOfBirth,
     string PhoneNumber,
     string Password,
-    string ConfirmPassword
+    string ConfirmPassword,
+    [EmailAddress]
+    string Email
 );
 

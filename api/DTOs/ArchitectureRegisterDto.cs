@@ -9,5 +9,7 @@ public record ArchitectureRegisterDto(
     string ConfirmPassword,
     string NationalCode,
     string licenseNumber,
-    string Providence
+    string Providence,
+    [EmailAddress]
+    string Email
 );

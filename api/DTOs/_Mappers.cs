@@ -25,7 +25,8 @@ public static class Mappers
             PhoneNumber = architectureRegisterDto.PhoneNumber,
             DateOfBirth = architectureRegisterDto.DateOfBirth,
             LicenseNumber = architectureRegisterDto.licenseNumber,
-            Providence = architectureRegisterDto.Providence
+            Providence = architectureRegisterDto.Providence,
+            Email = architectureRegisterDto.Email
         };
     }
 
@@ -36,7 +37,8 @@ public static class Mappers
             FirstName = clientRegisterDto.FirstName,
             LastName = clientRegisterDto.LastName,
             DateOfBirth = clientRegisterDto.DateOfBirth,
-            PhoneNumber = clientRegisterDto.PhoneNumber
+            PhoneNumber = clientRegisterDto.PhoneNumber,
+            Email = clientRegisterDto.Email
         };
     }
 }

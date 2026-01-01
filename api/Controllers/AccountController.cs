@@ -47,10 +47,10 @@ public class AccountController(IAccountRepository accountRepository) : Controlle
     {
         LoggedInDto? loggedInDto = await accountRepository.LoginAsync(UserIn, cancellationToken);
 
-        if (loggedInDto is null)
+        if (loggedInDto.IsWrongCreds)
             return BadRequest("Email or Password is wrong");
 
-        return Ok(loggedInDto);
+        return loggedInDto;
     }
 
     [HttpDelete("delete/{userId}")]
