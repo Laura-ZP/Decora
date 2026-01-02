@@ -1,11 +1,10 @@
+using api.Controllers.Helpers;
 using api.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class AccountController(IAccountRepository accountRepository) : ControllerBase
+public class AccountController(IAccountRepository accountRepository) : BaseApiController
 {
     [HttpPost("architecture-register")]
     public async Task<ActionResult<LoggedInDto>> ArchitectureRegister(ArchitectureRegisterDto userInput, CancellationToken cancellationToken)
