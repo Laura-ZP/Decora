@@ -21,9 +21,9 @@ public class AccountRepository : IAccountRepository
     }
     #endregion
 
-    public async Task<LoggedInDto?> ArchitectureRegisterAsync(ArchitectureRegisterDto userInput, CancellationToken cancellationToken)
+    public async Task<LoggedInDto?> ArchitectRegisterAsync(ArchitectRegisterDto userInput, CancellationToken cancellationToken)
     {
-        var appUser = Mappers.ConvertArchitectureRegisterDtoToAppUser(userInput);
+        var appUser = Mappers.ConvertArchitectRegisterDtoToAppUser(userInput);
 
         var userCreationResult = await _userManager.CreateAsync(appUser, userInput.Password);
 
@@ -37,7 +37,7 @@ public class AccountRepository : IAccountRepository
             };
         }
 
-        var roleResult = await _userManager.AddToRoleAsync(appUser, "architecture");
+        var roleResult = await _userManager.AddToRoleAsync(appUser, "architect");
 
         if (!roleResult.Succeeded)
         {

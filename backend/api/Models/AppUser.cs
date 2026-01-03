@@ -21,6 +21,7 @@ public class AppUser : MongoIdentityUser<ObjectId>
     public bool LicenseVerified { get; init; }
     public string LicenseNumber { get; init; } = string.Empty;
     public string Providence { get; init; } = string.Empty;
+    public List<Photo> Photos { get; init; } = [];
 }
 
 

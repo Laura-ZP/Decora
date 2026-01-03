@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nRLDIvIofmY70i1d5rd2NL24C+2b5UrAhr7yqrfMmuYR3hCKe86AUOujx3YrWlOWm2YvO6CftDt/v0Fuc+P4qQ==",
+  "dgSpecHash": "SE5Br1cNEyU=",
   "success": true,
-  "projectFilePath": "/home/laura/Documents/Decora/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj",
+  "projectFilePath": "/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj",
   "expectedPackageFiles": [
     "/home/laura/.nuget/packages/dnsclient/1.6.1/dnsclient.1.6.1.nupkg.sha512",
     "/home/laura/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.3.0/microsoft.aspnetcore.http.abstractions.2.3.0.nupkg.sha512",

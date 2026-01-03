@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/laura/Documents/Decora/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj": {}
+    "/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj": {}
   },
   "projects": {
-    "/home/laura/Documents/Decora/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj": {
+    "/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/laura/Documents/Decora/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj",
+        "projectUniqueName": "/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj",
         "projectName": "Image-Processing-WwwRoot",
-        "projectPath": "/home/laura/Documents/Decora/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj",
+        "projectPath": "/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/Image-Processing-WwwRoot.csproj",
         "packagesPath": "/home/laura/.nuget/packages/",
-        "outputPath": "/home/laura/Documents/Decora/Image-Processing-WwwRoot/obj/",
+        "outputPath": "/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/laura/.nuget/NuGet/NuGet.Config"
@@ -20,6 +20,7 @@
           "net8.0"
         ],
         "sources": {
+          "/usr/lib/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,7 +33,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -74,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

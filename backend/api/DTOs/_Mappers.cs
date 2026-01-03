@@ -16,17 +16,17 @@ public static class Mappers
         };
     }
 
-    public static AppUser ConvertArchitectureRegisterDtoToAppUser(ArchitectureRegisterDto architectureRegisterDto)
+    public static AppUser ConvertArchitectRegisterDtoToAppUser(ArchitectRegisterDto architectRegisterDto)
     {
         return new AppUser
         {
-            FirstName = architectureRegisterDto.FirstName,
-            LastName = architectureRegisterDto.LastName,
-            PhoneNumber = architectureRegisterDto.PhoneNumber,
-            DateOfBirth = architectureRegisterDto.DateOfBirth,
-            LicenseNumber = architectureRegisterDto.licenseNumber,
-            Providence = architectureRegisterDto.Providence,
-            Email = architectureRegisterDto.Email
+            FirstName = architectRegisterDto.FirstName,
+            LastName = architectRegisterDto.LastName,
+            PhoneNumber = architectRegisterDto.PhoneNumber,
+            DateOfBirth = architectRegisterDto.DateOfBirth,
+            LicenseNumber = architectRegisterDto.licenseNumber,
+            Providence = architectRegisterDto.Providence,
+            Email = architectRegisterDto.Email
         };
     }
 
@@ -40,5 +40,15 @@ public static class Mappers
             PhoneNumber = clientRegisterDto.PhoneNumber,
             Email = clientRegisterDto.Email
         };
+    }
+
+    public static Photo ConvertPhotoUrlsToPhoto(string[] photoUrls, bool isMain)
+    {
+        return new Photo(
+            Url_165: photoUrls[0],
+            Url_256: photoUrls[1],
+            Url_enlarged: photoUrls[2],
+            IsMain: isMain
+        );
     }
 }

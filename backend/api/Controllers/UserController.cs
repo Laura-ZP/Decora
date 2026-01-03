@@ -1,5 +1,6 @@
 using api.Controllers.Helpers;
 using api.Extensions;
+using api.Extensions.Validations;
 using Microsoft.AspNetCore.Authorization;
 
 namespace api.Controllers;
@@ -8,7 +9,7 @@ namespace api.Controllers;
 public class UserController(IUserRepository userRepository) : BaseApiController
 {
     [HttpPut("update")]
-    public async Task<ActionResult<Response>> UpdateById(ArchitectureUpdateDto userInput, CancellationToken cancellationToken)
+    public async Task<ActionResult<Response>> UpdateById(ArchitectUpdateDto userInput, CancellationToken cancellationToken)
     {
         var userId = User.GetUserId();
 
@@ -23,4 +24,31 @@ public class UserController(IUserRepository userRepository) : BaseApiController
                 Message: "User has been updated successfully."
             ));
     }
+
+    [HttpPost("add-photo")]
+    public async Task<ActionResult<Photo>> AddPhoto(
+    [AllowedFileExtensions, FileSize(250_000, 4_000_000)]
+    IFormFile file,
+    [FromForm] string designType,
+    CancellationToken cancellationToken
+    )
+    {
+        if (file is null)
+            return BadRequest("No file selected with this request");
+
+        if (string.IsNullOrEmpty(designType))
+            return BadRequest("No designType selected");
+
+        string? userId = User.GetUserId();
+
+        if (userId is null)
+            return Unauthorized("You are not logged in. please login again");
+
+        Photo? photo = await userRepository.UploadPhotoAsync(file, userId, designType, cancellationToken);
+
+        return photo is null
+            ? BadRequest("Add photo failed. See logger")
+            : Ok(photo);
+    }
+
 }

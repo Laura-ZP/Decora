@@ -6,13 +6,13 @@ namespace api.Controllers;
 
 public class AccountController(IAccountRepository accountRepository) : BaseApiController
 {
-    [HttpPost("architecture-register")]
-    public async Task<ActionResult<LoggedInDto>> ArchitectureRegister(ArchitectureRegisterDto userInput, CancellationToken cancellationToken)
+    [HttpPost("architect-register")]
+    public async Task<ActionResult<LoggedInDto>> ArchitectRegister(ArchitectRegisterDto userInput, CancellationToken cancellationToken)
     {
         if (userInput.Password != userInput.ConfirmPassword)
             return BadRequest("Your passwords do not match!");
 
-        LoggedInDto? loggedInDto = await accountRepository.ArchitectureRegisterAsync(userInput, cancellationToken);
+        LoggedInDto? loggedInDto = await accountRepository.ArchitectRegisterAsync(userInput, cancellationToken);
 
         if (loggedInDto?.Errors.Count() > 0)
         {

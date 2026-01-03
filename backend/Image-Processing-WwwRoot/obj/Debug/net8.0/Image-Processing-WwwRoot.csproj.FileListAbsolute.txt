@@ -1,0 +1,13 @@
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/bin/Debug/net8.0/Image-Processing-WwwRoot.deps.json
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/bin/Debug/net8.0/Image-Processing-WwwRoot.dll
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/bin/Debug/net8.0/Image-Processing-WwwRoot.pdb
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/Image-Processing-WwwRoot.csproj.AssemblyReference.cache
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/Image-Processing-WwwRoot.GeneratedMSBuildEditorConfig.editorconfig
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/Image-Processing-WwwRoot.AssemblyInfoInputs.cache
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/Image-Processing-WwwRoot.AssemblyInfo.cs
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/Image-Processing-WwwRoot.csproj.CoreCompileInputs.cache
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/Image-Processing-WwwRoot.sourcelink.json
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/Image-Processing-WwwRoot.dll
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/refint/Image-Processing-WwwRoot.dll
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/Image-Processing-WwwRoot.pdb
+/home/laura/Documents/Decora/backend/Image-Processing-WwwRoot/obj/Debug/net8.0/ref/Image-Processing-WwwRoot.dll

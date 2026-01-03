@@ -2,5 +2,7 @@ namespace api.Interfaces;
 
 public interface IUserRepository
 {
-    public Task<UpdateResult> UpdateByIdAsync(string userId, ArchitectureUpdateDto userInput, CancellationToken cancellationToken);
+    public Task<AppUser?> GetByIdAsync(string userId, CancellationToken cancellationToken);
+    public Task<UpdateResult> UpdateByIdAsync(string userId, ArchitectUpdateDto userInput, CancellationToken cancellationToken);
+    public Task<Photo?> UploadPhotoAsync(IFormFile file, string userId, string designType, CancellationToken cancellationToken);
 }

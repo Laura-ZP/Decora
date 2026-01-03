@@ -3,17 +3,31 @@ namespace api.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly IMongoCollection<AppUser> _collection;
+    private readonly IMongoCollection<Design> _designCollection;
     private readonly ITokenService _tokenService;
+    private readonly IPhotoService _photoService;
 
-    public UserRepository(IMongoClient client, IMyMongoDbSettings dbSettings, ITokenService tokenService)
+    public UserRepository(IMongoClient client, IMyMongoDbSettings dbSettings, ITokenService tokenService, IPhotoService photoService)
     {
         var dbName = client.GetDatabase(dbSettings.DatabaseName);
         _collection = dbName.GetCollection<AppUser>("users");
+        _designCollection = dbName.GetCollection<Design>("designs");
 
         _tokenService = tokenService;
+        _photoService = photoService;
     }
 
-    public async Task<UpdateResult> UpdateByIdAsync(string userId, ArchitectureUpdateDto userInput, CancellationToken cancellationToken)
+    public async Task<AppUser?> GetByIdAsync(string userId, CancellationToken cancellationToken)
+    {
+        AppUser? appUser = await _collection.Find(doc => doc.Id.ToString() == userId).SingleOrDefaultAsync(cancellationToken);
+
+        if (appUser is null)
+            return null;
+
+        return appUser;
+    }
+
+    public async Task<UpdateResult> UpdateByIdAsync(string userId, ArchitectUpdateDto userInput, CancellationToken cancellationToken)
     {
         UpdateDefinition<AppUser> updateDefinition = Builders<AppUser>.Update
         .Set(appUser => appUser.City, userInput.City.Trim())
@@ -25,5 +39,68 @@ public class UserRepository : IUserRepository
         .Set(appUser => appUser.Address, userInput.Address.Trim());
 
         return await _collection.UpdateOneAsync(user => user.Id.ToString() == userId, updateDefinition, null, cancellationToken);
+    }
+
+    public async Task<Photo?> UploadPhotoAsync(IFormFile file, string userId, string designType, CancellationToken cancellationToken)
+    {
+        AppUser? appUser = await GetByIdAsync(userId, cancellationToken);
+
+        if (appUser is null)
+            return null;
+
+        Design? design = await _designCollection
+            .Find(d => d.Type == designType)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (design is null)
+            return null;
+
+        if (!ObjectId.TryParse(userId, out var objectId))
+            return null;
+
+        string[]? imageUrls = await _photoService.AddPhotoToDiskAsync(file, objectId);
+
+        if (imageUrls is null)
+            return null;
+
+        Photo photo = Mappers.ConvertPhotoUrlsToPhoto(imageUrls, isMain: false);
+
+        // User
+        appUser.Photos.Add(photo);
+        await _collection.UpdateOneAsync(
+            u => u.Id.ToString() == userId,
+            Builders<AppUser>.Update.Set(u => u.Photos, appUser.Photos),
+            null,
+            cancellationToken);
+
+        // Design
+        design.Photos.Add(photo);
+        await _designCollection.UpdateOneAsync(
+            d => d.Type == designType,
+            Builders<Design>.Update.Set(d => d.Photos, design.Photos),
+            null,
+            cancellationToken);
+
+        if (design is null)
+        {
+            design = new Design
+            {
+                Type = designType,
+                Photos = new List<Photo>()
+            };
+
+            // await _designCollection.InsertOneAsync(design, cancellationToken);
+            await _designCollection.InsertOneAsync(design, new InsertOneOptions(), cancellationToken);
+        }
+
+        design.Photos.Add(photo);
+
+        await _designCollection.UpdateOneAsync(
+            d => d.Type == designType,
+            Builders<Design>.Update.Set(d => d.Photos, design.Photos),
+            null,
+            cancellationToken);
+
+        return photo;
     }
 }
