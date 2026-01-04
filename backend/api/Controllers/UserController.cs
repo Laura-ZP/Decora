@@ -51,4 +51,23 @@ public class UserController(IUserRepository userRepository) : BaseApiController
             : Ok(photo);
     }
 
+    [HttpPut("set-main-photo")]
+    public async Task<ActionResult<Response>> SetMainPhoto(string photoUrlIn, CancellationToken cancellationToken)
+    {
+        string? userId = User.GetUserId();
+
+        if (userId is null)
+        {
+            return Unauthorized("You are not logged in. please login again");
+        }
+
+        UpdateResult? updateResult = await userRepository.SetMainPhotoAsync(userId, photoUrlIn, cancellationToken);
+
+        return updateResult is null || !updateResult.IsModifiedCountAvailable
+            ? BadRequest("Set as main photo failed. Try again in a few moments. If the issue persists contact the admin.")
+            : Ok(new Response(
+                Message: "Set this photo as main succeeded."
+            ));
+    }
+
 }
