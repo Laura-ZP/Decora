@@ -70,4 +70,21 @@ public class UserController(IUserRepository userRepository) : BaseApiController
             ));
     }
 
+    [HttpPut("delete-photo")]
+    public async Task<ActionResult<Response>> DeletePhoto(string photoUrlIn, CancellationToken cancellationToken)
+    {
+        string? userId = User.GetUserId();
+
+        if (string.IsNullOrEmpty(userId))
+            return Unauthorized("The user is not logged in");
+
+        UpdateResult? updateResult = await userRepository.DeletePhotoAsync(userId, photoUrlIn, cancellationToken);
+
+        return updateResult is null || !updateResult.IsModifiedCountAvailable
+            ? BadRequest("Photo deletion failed. Try again in a few moments. If the issue persists contact the admin.")
+            : Ok(new Response(
+                Message: "Photo deleted successfully."
+            ));
+    }
+
 }

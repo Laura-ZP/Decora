@@ -132,4 +132,46 @@ public class UserRepository : IUserRepository
         return await _collection.UpdateOneAsync(filterNew, updateNew, null, cancellationToken);
         #endregion
     }
+
+    public async Task<UpdateResult?> DeletePhotoAsync(string userId, string? url_165_In, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrEmpty(url_165_In)) return null;
+
+        // Find the photo in AppUser
+        Photo photo = await _collection.AsQueryable()
+            .Where(appUser => appUser.Id.ToString() == userId) // filter by user Id
+            .SelectMany(appUser => appUser.Photos) // flatten the Photos array
+            .Where(photo => photo.Url_165 == url_165_In) // filter by photo url
+            .FirstOrDefaultAsync(cancellationToken); // return the photo or null
+
+        if (photo is null) return null; // Warning: should be handled with Exception handling Middlewear to log the app's bug since it's a bug!
+
+        if (photo.IsMain) return null; // prevent from deleting main photo!
+
+        bool isDeleteSuccess = await _photoService.DeletePhotoFromDisk(photo);
+
+        if (!isDeleteSuccess)
+            return null;
+
+        UpdateDefinition<AppUser> updateAppUser = Builders<AppUser>.Update
+         .PullFilter(appUser => appUser.Photos, p => p.Url_165 == url_165_In);
+
+        UpdateResult resultAppUser = await _collection.UpdateOneAsync<AppUser>(
+            appUser => appUser.Id.ToString() == userId,
+            updateAppUser,
+            null,
+            cancellationToken
+        );
+
+        UpdateDefinition<Design> updateDesign = Builders<Design>.Update
+            .PullFilter(design => design.Photos, p => p.Url_165 == url_165_In);
+
+        UpdateResult resultDesign = await _designCollection.UpdateManyAsync(
+            filter: Builders<Design>.Filter.Empty,
+            update: updateDesign,
+            cancellationToken: cancellationToken
+        );
+
+        return resultAppUser;
+    }
 }
