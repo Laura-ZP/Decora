@@ -53,4 +53,23 @@ public static class Mappers
             IsMain: isMain
         );
     }
+
+    public static MemberDto ConvertAppUserToMemberDto(AppUser appUser)
+    {
+        return new(
+            Email: appUser.Email,
+            FirstName: appUser.FirstName,
+            LastName: appUser.LastName,
+            Age: DateTimeExtensions.CalculateAge(appUser.DateOfBirth),
+            City: appUser.City,
+            Specializations: appUser.Specializations,
+            YearsOfExperience: appUser.YearsOfExperience,
+            Skills: appUser.Skills,
+            IsAvailableForHire: appUser.IsAvailableForHire,
+            RemoteWork: appUser.RemoteWork,
+            Address: appUser.Address,
+            LicenseVerified: appUser.LicenseVerified,
+            Photos: appUser.Photos
+        );
+    }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Image-Processing-WwwRoot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb4dad6056fc80dc487f88cdf989ae349abe3a7c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c7d7d7e4bd697267bc80542cb0dad4bebefb2308")]
 [assembly: System.Reflection.AssemblyProductAttribute("Image-Processing-WwwRoot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Image-Processing-WwwRoot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
