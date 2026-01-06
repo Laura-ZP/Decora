@@ -8,7 +8,7 @@ public record ArchitectRegisterDto(
     string Password,
     string ConfirmPassword,
     string NationalCode,
-    string licenseNumber,
+    string LicenseNumber,
     string Providence,
     [EmailAddress]
     string Email

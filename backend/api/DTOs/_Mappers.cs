@@ -24,9 +24,10 @@ public static class Mappers
             LastName = architectRegisterDto.LastName,
             PhoneNumber = architectRegisterDto.PhoneNumber,
             DateOfBirth = architectRegisterDto.DateOfBirth,
-            LicenseNumber = architectRegisterDto.licenseNumber,
+            LicenseNumber = architectRegisterDto.LicenseNumber,
             Providence = architectRegisterDto.Providence,
-            Email = architectRegisterDto.Email
+            Email = architectRegisterDto.Email,
+            UserName = architectRegisterDto.Email
         };
     }
 
@@ -38,7 +39,8 @@ public static class Mappers
             LastName = clientRegisterDto.LastName,
             DateOfBirth = clientRegisterDto.DateOfBirth,
             PhoneNumber = clientRegisterDto.PhoneNumber,
-            Email = clientRegisterDto.Email
+            Email = clientRegisterDto.Email,
+            UserName = clientRegisterDto.Email
         };
     }
 

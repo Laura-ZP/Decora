@@ -43,67 +43,37 @@ public class UserRepository : IUserRepository
         return await _collection.UpdateOneAsync(user => user.Id.ToString() == userId, updateDefinition, null, cancellationToken);
     }
 
-    public async Task<Photo?> UploadPhotoAsync(IFormFile file, string userId, string designType, CancellationToken cancellationToken)
+    public async Task<Photo?> UploadPhotoAsync(IFormFile file, string userId, CancellationToken cancellationToken)
     {
         AppUser? appUser = await GetByIdAsync(userId, cancellationToken);
 
         if (appUser is null)
             return null;
 
-        Design? design = await _designCollection
-            .Find(d => d.Type == designType)
-            .FirstOrDefaultAsync(cancellationToken);
-
-        if (design is null)
-            return null;
+        // ObjectId objectId = ObjectId.Parse(userId);
 
         if (!ObjectId.TryParse(userId, out var objectId))
             return null;
 
         string[]? imageUrls = await _photoService.AddPhotoToDiskAsync(file, objectId);
 
-        if (imageUrls is null)
-            return null;
-
-        Photo photo = Mappers.ConvertPhotoUrlsToPhoto(imageUrls, isMain: false);
-
-        // User
-        appUser.Photos.Add(photo);
-        await _collection.UpdateOneAsync(
-            u => u.Id.ToString() == userId,
-            Builders<AppUser>.Update.Set(u => u.Photos, appUser.Photos),
-            null,
-            cancellationToken);
-
-        // Design
-        design.Photos.Add(photo);
-        await _designCollection.UpdateOneAsync(
-            d => d.Type == designType,
-            Builders<Design>.Update.Set(d => d.Photos, design.Photos),
-            null,
-            cancellationToken);
-
-        if (design is null)
+        if (imageUrls is not null)
         {
-            design = new Design
-            {
-                Type = designType,
-                Photos = new List<Photo>()
-            };
+            Photo photo;
 
-            // await _designCollection.InsertOneAsync(design, cancellationToken);
-            await _designCollection.InsertOneAsync(design, new InsertOneOptions(), cancellationToken);
+            photo = Mappers.ConvertPhotoUrlsToPhoto(imageUrls, isMain: false);
+
+            appUser.Photos.Add(photo);
+
+            UpdateDefinition<AppUser> updatedUser = Builders<AppUser>.Update
+                .Set(doc => doc.Photos, appUser.Photos);
+
+            UpdateResult result = await _collection.UpdateOneAsync(doc => doc.Id.ToString() == userId, updatedUser, null, cancellationToken);
+
+            return result.ModifiedCount == 1 ? photo : null;
         }
 
-        design.Photos.Add(photo);
-
-        await _designCollection.UpdateOneAsync(
-            d => d.Type == designType,
-            Builders<Design>.Update.Set(d => d.Photos, design.Photos),
-            null,
-            cancellationToken);
-
-        return photo;
+        return null;
     }
 
     public async Task<UpdateResult?> SetMainPhotoAsync(string userId, string photoUrlIn, CancellationToken cancellationToken)
@@ -153,25 +123,9 @@ public class UserRepository : IUserRepository
         if (!isDeleteSuccess)
             return null;
 
-        UpdateDefinition<AppUser> updateAppUser = Builders<AppUser>.Update
-         .PullFilter(appUser => appUser.Photos, p => p.Url_165 == url_165_In);
+        UpdateDefinition<AppUser> update = Builders<AppUser>.Update
+            .PullFilter(appUser => appUser.Photos, photo => photo.Url_165 == url_165_In);
 
-        UpdateResult resultAppUser = await _collection.UpdateOneAsync<AppUser>(
-            appUser => appUser.Id.ToString() == userId,
-            updateAppUser,
-            null,
-            cancellationToken
-        );
-
-        UpdateDefinition<Design> updateDesign = Builders<Design>.Update
-            .PullFilter(design => design.Photos, p => p.Url_165 == url_165_In);
-
-        UpdateResult resultDesign = await _designCollection.UpdateManyAsync(
-            filter: Builders<Design>.Filter.Empty,
-            update: updateDesign,
-            cancellationToken: cancellationToken
-        );
-
-        return resultAppUser;
+        return await _collection.UpdateOneAsync<AppUser>(appUser => appUser.Id.ToString() == userId, update, null, cancellationToken);
     }
 }
