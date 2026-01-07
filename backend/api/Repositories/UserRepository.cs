@@ -5,7 +5,6 @@ namespace api.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly IMongoCollection<AppUser> _collection;
-    private readonly IMongoCollection<Design> _designCollection;
     private readonly ITokenService _tokenService;
     private readonly IPhotoService _photoService;
 
@@ -13,7 +12,6 @@ public class UserRepository : IUserRepository
     {
         var dbName = client.GetDatabase(dbSettings.DatabaseName);
         _collection = dbName.GetCollection<AppUser>("users");
-        _designCollection = dbName.GetCollection<Design>("designs");
 
         _tokenService = tokenService;
         _photoService = photoService;
